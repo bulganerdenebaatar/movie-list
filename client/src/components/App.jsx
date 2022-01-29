@@ -22,7 +22,7 @@ class App extends React.Component {
   // in parent, methods here are going to implement what these methods are gonna do with the given parameter
 
   addMovie(movie) {
-    event.preventDefault(); // preventing to refresh
+    // event.preventDefault(); // preventing to refresh
     console.log('app', movie)
      // create copy of movies array - add new movie to movies array set state of movies to movies arr
      const newMovies = [...this.state.movies, movie] // copy of movies array and add movie
