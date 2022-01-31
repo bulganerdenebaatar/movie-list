@@ -15,7 +15,7 @@ class AddForm extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     var title = this.state.value; // assgning title to be the state.value that's been changed from handleChange
-    this.props.addMovie({title}); // passing the title to addMovie in App
+    this.props.postDataOnServer({title}); // passing the title to addMovie in App
   }
   render() {
     return (

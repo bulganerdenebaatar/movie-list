@@ -11,38 +11,53 @@ class App extends React.Component {
     this.state = {
       search: '',
       movies: []
-      // [{title: 'Mean Girls'},
-      // {title: 'Hackers'},
-      // {title: 'The Grey'},
-      // {title: 'Sunshine'},
-      // {title: 'Ex Machina'}],
     }
-    this.addMovie = this.addMovie.bind(this);
+
+    // this.addMovie = this.addMovie.bind(this);
     this.searchMovie = this.searchMovie.bind(this);
-    console.log('this.state.movies',this.state.movies)
+    this.getDataFromServer = this.getDataFromServer.bind(this);
+    this.postDataOnServer = this.postDataOnServer.bind(this);
   }
   // in parent, methods here are going to implement what these methods are gonna do with the given parameter
   componentDidMount() {
+    this.getDataFromServer();
+  }
+
+
+  getDataFromServer() {
     axios({
       method: 'get',
       url:'/api/movies'
     })
-      .then(function (response) {
-        console.log(response.data)
-        this.setState({
-          movies:response.data
-      });
+    .then((response) => {
+      console.log('response data', response.data)
+      this.setState({
+        movies: response.data
+      })
     })
   }
 
-  addMovie(movie) {
-    // event.preventDefault(); // preventing to refresh
-    console.log('app', movie)
-     // create copy of movies array - add new movie to movies array set state of movies to movies arr
-     const newMovies = [...this.state.movies, movie] // copy of movies array and add movie
-    //  newMovies.push(movie) dont need because movie is added on line 28
-     this.setState({movies: newMovies});
+  postDataOnServer(title) {
+    var movie = {moviename: title}
+    console.log(title)
+    axios({
+      method: 'post',
+      url:'/api/movies'
+    }, title)
+    .then(() => {
+      this.getDataFromServer();
+    })
   }
+
+  // addMovie(movie) {
+  //   // event.preventDefault(); // preventing to refresh
+  //   console.log('app', movie)
+  //    // create copy of movies array - add new movie to movies array set state of movies to movies arr
+  //    const newMovies = [...this.state.movies, movie] // copy of movies array and add movie
+  //   //  newMovies.push(movie) dont need because movie is added on line 28
+  //    this.setState({movies: newMovies});
+  // }
+
   searchMovie(movie) {
     // event.preventDefault(); not needed here, app doesnt care what happens on child method
     console.log('app', movie)
@@ -55,7 +70,7 @@ class App extends React.Component {
     return (
       <>
         <Header />
-        <AddForm addMovie={this.addMovie}/>
+        <AddForm postDataOnServer={this.postDataOnServer}/>
         <Search searchMovie={this.searchMovie}/>
         <MovieList movies={movies} />
       </>

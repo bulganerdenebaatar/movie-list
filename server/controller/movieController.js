@@ -11,8 +11,8 @@ const getMovies = (req, res) => {
 }
 
 const postMovies = (req, res) => {
-
   const movieName = req.body.title;
+  console.log(movieName)
   MovieModel.postMovies(movieName, (error, postMovie) => {
     // movieName is an array
     console.log('movie name', movieName);
