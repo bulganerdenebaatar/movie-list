@@ -9,16 +9,10 @@ app.use(express.urlencoded({ extend: true })); // body
 app.use(express.static('client/dist'));
 
 //GET method route
-app.get('/api/movies', (req, res) => { //route handler, ask controller to handle getting stuff...
-  MovieController.getMovies(req, res);
-})
+app.get('/api/movies', MovieController.getMovies);//route handler, ask controller to handle getting stuff...
 
 // POST method route
-app.post('/api/movies',(req, res) => {
-  res.send('POST request');
-  console.log('req body',req.body);
-  MovieController.postMovies(req, res);
-})
+app.post('/api/movies', MovieController.postMovies);
 
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);

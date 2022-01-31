@@ -3,23 +3,37 @@ import Header from './Header.jsx';
 import MovieList from './MovieList.jsx';
 import AddForm from './AddForm.jsx';
 import Search from './Search.jsx';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       search: '',
-      movies: [{title: 'Mean Girls'},
-      {title: 'Hackers'},
-      {title: 'The Grey'},
-      {title: 'Sunshine'},
-      {title: 'Ex Machina'}]
+      movies: []
+      // [{title: 'Mean Girls'},
+      // {title: 'Hackers'},
+      // {title: 'The Grey'},
+      // {title: 'Sunshine'},
+      // {title: 'Ex Machina'}],
     }
     this.addMovie = this.addMovie.bind(this);
     this.searchMovie = this.searchMovie.bind(this);
-    console.log(this.state.movies)
+    console.log('this.state.movies',this.state.movies)
   }
   // in parent, methods here are going to implement what these methods are gonna do with the given parameter
+  componentDidMount() {
+    axios({
+      method: 'get',
+      url:'/api/movies'
+    })
+      .then(function (response) {
+        console.log(response.data)
+        this.setState({
+          movies:response.data
+      });
+    })
+  }
 
   addMovie(movie) {
     // event.preventDefault(); // preventing to refresh
